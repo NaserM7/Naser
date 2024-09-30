@@ -1,597 +1,301 @@
-
-from datetime import datetime
-from typing import List
-from enum import Enum
-
-"""Helper Classes"""
-
-class DateRange:
-    def __init__(self, start_date: datetime, end_date: datetime):
-        self.start_date = start_date
-        self.end_date = end_date
-
-    def is_valid(self) -> bool:
-        """Check if the date range is valid (start date should be before end date)."""
-        return self.start_date < self.end_date
-
-# Enum for status values
-class ReservationStatus(Enum):
-    PENDING = "Pending"
-    CONFIRMED = "Confirmed"
-    CANCELED = "Canceled"
-
-class PaymentStatus(Enum):
-    PENDING = "Pending"
-    COMPLETED = "Completed"
-    FAILED = "Failed"
-
-"""Classes"""
-
 class Customer:
     """
-    Represents a customer in the hotel reservation system.
-
-    Attributes:
-        customer_id (str): Unique identifier for the customer.
-        name (str): Full name of the customer.
-        email (str): Email address of the customer.
-        phone (str): Phone number of the customer.
-        address (str): Residential address of the customer.
-        reservations (List[Reservation]): List of reservations made by the customer.
+    Represents a hotel customer who books rooms and makes reservations.
     """
 
-    def __init__(self, customer_id: str, name: str, email: str, phone: str, address: str):
-        """Initialize a Customer object with provided details."""
-        self.customer_id = customer_id
-        self.name = name
-        self.email = email
-        self.phone = phone
-        self.address = address
-        self.reservations: List['Reservation'] = []
-
-    def getCustomerID(self):
-        """Return the customer's unique identifier."""
-        return self.customer_id
-
-    def setCustomerID(self, customer_id):
-        """Set the customer's unique identifier."""
-        self.customer_id = customer_id
-
-    def getName(self):
-        """Return the customer's name."""
-        return self.name
-
-    def setName(self, name):
-        """Set the customer's name."""
-        self.name = name
-
-    def getEmail(self):
-        """Return the customer's email address."""
-        return self.email
-
-    def setEmail(self, email):
-        """Set the customer's email address."""
-        self.email = email
-
-    def getPhone(self):
-        """Return the customer's phone number."""
-        return self.phone
-
-    def setPhone(self, phone):
-        """Set the customer's phone number."""
-        self.phone = phone
-
-    def getAddress(self):
-        """Return the customer's address."""
-        return self.address
-
-    def setAddress(self, address):
-        """Set the customer's address."""
-        self.address = address
-
-    def make_reservation(self, details: 'ReservationDetails') -> 'Reservation':
-        """Create a new reservation with the given details.
-
-        Args:
-            details (ReservationDetails): Details of the reservation.
-
-        Returns:
-            Reservation: The created reservation object.
+    def __init__(self, name, email, trip_number, confirmation_number):
         """
-        pass  # This will be implemented to create and add a new reservation
-
-    def cancel_reservation(self, reservation_id: str):
-        """Cancel a reservation based on the reservation ID.
-
-        Args:
-            reservation_id (str): The ID of the reservation to cancel.
+        Initialize a new Customer instance.
         """
-        pass  # This will be implemented to cancel the reservation
+        self._name = name
+        self._email = email
+        self._trip_number = trip_number
+        self._confirmation_number = confirmation_number
 
-    def reschedule_reservation(self, reservation_id: str, new_dates: 'DateRange'):
-        """Reschedule an existing reservation with new dates.
-
-        Args:
-            reservation_id (str): The ID of the reservation to reschedule.
-            new_dates (DateRange): The new dates for the reservation.
-        """
-        pass  # This will be implemented to reschedule the reservation
-
-    def make_payment(self, amount: float) -> 'Payment':
-        """Process payment for a reservation.
-
-        Args:
-            amount (float): The amount to process for the payment.
-
-        Returns:
-            Payment: The payment object created.
-        """
-        pass  # This will be implemented to handle payment processing
-
-
-class HotelStaff:
-    """
-    Represents a hotel staff member.
-
-    Attributes:
-        staff_id (str): Unique identifier for the staff member.
-        name (str): Full name of the staff member.
-        role (str): Role of the staff member in the hotel.
-    """
-
-    def __init__(self, staff_id: str, name: str, role: str):
-        """Initialize a HotelStaff object with provided details."""
-        self.staff_id = staff_id
-        self.name = name
-        self.role = role
-
-    def get_staff_id(self):
-        """Return the staff member's unique identifier."""
-        return self.staff_id
-
-    def set_staff_id(self, staff_id):
-        """Set the staff member's unique identifier."""
-        self.staff_id = staff_id
-
+    # Getter and Setter methods
     def get_name(self):
-        """Return the staff member's name."""
-        return self.name
+        """
+        Returns the name of the customer.
+        """
+        return self._name
 
     def set_name(self, name):
-        """Set the staff member's name."""
-        self.name = name
-
-    def get_role(self):
-        """Return the staff member's role."""
-        return self.role
-
-    def set_role(self, role):
-        """Set the staff member's role."""
-        self.role = role
-
-    def create_reservation(self, details: 'ReservationDetails') -> 'Reservation':
-        """Create a new reservation with the given details.
-
-        Args:
-            details (ReservationDetails): Details of the reservation.
-
-        Returns:
-            Reservation: The created reservation object.
         """
-        pass  # This will be implemented to create a reservation
-
-    def mark_check_in(self, reservation_id: str):
-        """Mark a reservation as checked in.
-
-        Args:
-            reservation_id (str): The ID of the reservation to check in.
+        Sets the name of the customer.
         """
-        pass  # This will be implemented to mark check-in
+        self._name = name
 
-    def mark_check_out(self, reservation_id: str):
-        """Mark a reservation as checked out.
-
-        Args:
-            reservation_id (str): The ID of the reservation to check out.
+    def get_email(self):
         """
-        pass  # This will be implemented to mark check-out
-
-    def process_payment(self, amount: float, reservation_id: str) -> 'Payment':
-        """Process payment for a specific reservation.
-
-        Args:
-            amount (float): The amount to process for the payment.
-            reservation_id (str): The ID of the reservation to process payment for.
-
-        Returns:
-            Payment: The payment object created.
+        Returns the email address of the customer.
         """
-        pass  # This will be implemented to handle payment processing
+        return self._email
+
+    def set_email(self, email):
+        """
+        Sets the email address of the customer.
+        """
+        self._email = email
+
+    def get_trip_number(self):
+        """
+        Returns the trip number of the customer.
+        """
+        return self._trip_number
+
+    def set_trip_number(self, trip_number):
+        """
+        Sets the trip number of the customer.
+        """
+        self._trip_number = trip_number
+
+    def get_confirmation_number(self):
+        """
+        Returns the confirmation number of the customer's reservation.
+        """
+        return self._confirmation_number
+
+    def set_confirmation_number(self, confirmation_number):
+        """
+        Sets the confirmation number of the customer's reservation.
+        """
+        self._confirmation_number = confirmation_number
+
+    # Placeholder method for additional customer functionality
+    def display_info(self):
+        """
+        Displays the customer's information. This is a placeholder for future functionality.
+        """
+        pass
 
 
-class Reservation:
+class HotelRoom:
     """
-    Represents a reservation made by a customer.
-
-    Attributes:
-        reservation_id (str): Unique identifier for the reservation.
-        customer (Customer): The customer who made the reservation.
-        check_in_date (datetime): The check-in date for the reservation.
-        check_out_date (datetime): The check-out date for the reservation.
-        status (str): The status of the reservation (e.g., Pending).
-        room (Room): The room associated with the reservation.
-        advance_payment (Payment): The advance payment made for the reservation.
-        balance_payment (Payment): The balance payment for the reservation.
-        taxes (float): The total taxes applicable to the reservation.
-        room_cost (float): The total room cost for the reservation.
-        total_amount (float): The total amount for the reservation.
+    Represents a hotel room booked by a customer.
     """
 
-    def __init__(self, reservation_id: str, customer: Customer ,check_in_date: datetime, check_out_date: datetime):
-        """Initialize a Reservation object with provided details."""
-        self.reservation_id = reservation_id
-        self.customer: 'Customer' = customer
-        self.check_in_date = check_in_date
-        self.check_out_date = check_out_date
-        self.status = 'Pending'  # ReservationStatus can be an Enum
-        self.room: 'Room' = None
-        self.advance_payment: 'Payment' = None
-        self.balance_payment: 'Payment' = None
-        self.taxes: float = 0.0
-        self.room_cost: float = 0.0
-        self.total_amount: float = 0.0
-
-    def get_reservation_id(self):
-        """Return the reservation's unique identifier."""
-        return self.reservation_id
-
-    def set_reservation_id(self, reservation_id):
-        """Set the reservation's unique identifier."""
-        self.reservation_id = reservation_id
-
-    def get_check_in_date(self):
-        """Return the check-in date of the reservation."""
-        return self.check_in_date
-
-    def set_check_in_date(self, check_in_date):
-        """Set the check-in date of the reservation."""
-        self.check_in_date = check_in_date
-
-    def get_check_out_date(self):
-        """Return the check-out date of the reservation."""
-        return self.check_out_date
-
-    def set_check_out_date(self, check_out_date):
-        """Set the check-out date of the reservation."""
-        self.check_out_date = check_out_date
-
-    def get_status(self):
-        """Return the status of the reservation."""
-        return self.status
-
-    def set_status(self, status):
-        """Set the status of the reservation."""
-        self.status = status
-
-    def get_room(self):
-        """Return the room associated with the reservation."""
-        return self.room
-
-    def set_room(self, room):
-        """Set the room associated with the reservation."""
-        self.room = room
-
-    def get_advance_payment(self):
-        """Return the advance payment made for the reservation."""
-        return self.advance_payment
-
-    def set_advance_payment(self, advance_payment):
-        """Set the advance payment made for the reservation."""
-        self.advance_payment = advance_payment
-
-    def get_balance_payment(self):
-        """Return the balance payment for the reservation."""
-        return self.balance_payment
-
-    def set_balance_payment(self, balance_payment):
-        """Set the balance payment for the reservation."""
-        self.balance_payment = balance_payment
-
-    def get_taxes(self):
-        """Return the total taxes applicable to the reservation."""
-        return self.taxes
-
-    def set_taxes(self, taxes):
-        """Set the total taxes applicable to the reservation."""
-        self.taxes = taxes
-
-    def get_room_cost(self):
-        """Return the total room cost for the reservation."""
-        return self.room_cost
-
-    def set_room_cost(self, room_cost):
-        """Set the total room cost for the reservation."""
-        self.room_cost = room_cost
-
-    def get_total_amount(self):
-        """Return the total amount for the reservation."""
-        return self.total_amount
-
-    def set_total_amount(self, total_amount):
-        """Set the total amount for the reservation."""
-        self.total_amount = total_amount
-
-    def confirm_reservation(self):
-        """Confirm the reservation."""
-        pass  # This will be implemented to confirm the reservation
-
-    def cancel_reservation(self):
-        """Cancel the reservation."""
-        pass  # This will be implemented to cancel the reservation
-
-    def reschedule_reservation(self, new_dates: 'DateRange'):
-        """Reschedule the reservation with new dates.
-
-        Args:
-            new_dates (DateRange): The new dates for the reservation.
+    def __init__(self, address, room_type, room_number, price_per_night, amenities):
         """
-        pass  # This will be implemented to reschedule the reservation
-
-    def extend_stay(self, extra_hours: int):
-        """Extend the stay by additional hours.
-
-        Args:
-            extra_hours (int): The number of extra hours to extend the stay.
+        Initialize a new HotelRoom instance.
         """
-        pass  # This will be implemented to extend the stay
+        self._address = address
+        self._room_type = room_type
+        self._room_number = room_number
+        self._price_per_night = price_per_night
+        self._amenities = amenities
 
+    # Getter and Setter methods
+    def get_address(self):
+        """
+        Returns the hotel's address.
+        """
+        return self._address
 
-class Room:
-    """
-    Represents a hotel room.
+    def set_address(self, address):
+        """
+        Sets the hotel's address.
+        """
+        self._address = address
 
-    Attributes:
-        room_id (str): Unique identifier for the room.
-        type (str): Type of the room (e.g., Single, Double).
-        price_per_night (float): Price per night for the room.
-        availability (bool): Availability status of the room.
-    """
+    def get_room_type(self):
+        """
+        Returns the type of room.
+        """
+        return self._room_type
 
-    def __init__(self, room_id: str, room_type: str, price_per_night: float, availability: bool):
-        """Initialize a Room object with provided details."""
-        self.room_id = room_id
-        self.type = room_type
-        self.price_per_night = price_per_night
-        self.availability = availability
+    def set_room_type(self, room_type):
+        """
+        Sets the type of room.
+        """
+        self._room_type = room_type
 
-    def get_room_id(self):
-        """Return the room's unique identifier."""
-        return self.room_id
+    def get_room_number(self):
+        """
+        Returns the room number.
+        """
+        return self._room_number
 
-    def set_room_id(self, room_id):
-        """Set the room's unique identifier."""
-        self.room_id = room_id
-
-    def get_type(self):
-        """Return the room type."""
-        return self.type
-
-    def set_type(self, room_type):
-        """Set the room type."""
-        self.type = room_type
+    def set_room_number(self, room_number):
+        """
+        Sets the room number.
+        """
+        self._room_number = room_number
 
     def get_price_per_night(self):
-        """Return the price per night for the room."""
-        return self.price_per_night
+        """
+        Returns the price per night of the room.
+        """
+        return self._price_per_night
 
     def set_price_per_night(self, price_per_night):
-        """Set the price per night for the room."""
-        self.price_per_night = price_per_night
+        """
+        Sets the price per night of the room.
+        """
+        self._price_per_night = price_per_night
 
-    def get_availability(self):
-        """Return the availability of the room."""
-        return self.availability
+    def get_amenities(self):
+        """
+        Returns the list of amenities available in the room.
+        """
+        return self._amenities
 
-    def set_availability(self, availability):
-        """Set the availability of the room."""
-        self.availability = availability
+    def set_amenities(self, amenities):
+        """
+        Sets the list of amenities available in the room.
+        """
+        self._amenities = amenities
 
-    def check_availability(self, dates: 'DateRange') -> bool:
-        """Check if the room is available for the given dates."""
-        pass  # This will be implemented to check room availability
+    # Placeholder method for checking room availability
+    def display_room_info(self):
+        """
+        Displays the room's information. This is a placeholder for future functionality.
+        """
+        pass
 
 
 class Payment:
     """
-    Represents a payment.
-
-    Attributes:
-        payment_id (str): Unique identifier for the payment.
-        amount (float): Value of the payment.
-        status (str): Status of the payment (e.g., Pending).
-        payment_date (datetime): Date and time of the payment.
-        payment_method (str): Method used for the payment (e.g., Credit Card).
-        payment_note (str): Additional note or details about the payment.
+    Represents payment information for a hotel booking.
     """
-    def __init__(self, payment_id: str, amount: float, status: str, payment_date: datetime, payment_method: str, payment_note: str):
-        """Initialize a Payment object with provided details."""
-        self.payment_id = payment_id
-        self.amount = amount
-        self.status = status  # PaymentStatus can be an Enum
-        self.payment_date = payment_date
-        self.payment_method = payment_method
-        self.payment_note = payment_note
 
-    def get_payment_id(self):
-        """Return the payment identifier."""
-        return self.payment_id
+    def __init__(self, billing_name, card_type, room_cost, nights, taxes_and_fees, total_charges):
+        """
+        Initialize a new Payment instance.
+        """
+        self._billing_name = billing_name
+        self._card_type = card_type
+        self._room_cost = room_cost
+        self._nights = nights
+        self._taxes_and_fees = taxes_and_fees
+        self._total_charges = total_charges
 
-    def set_payment_id(self, payment_id):
-        """Set the payment identifier."""
-        self.payment_id = payment_id
+    # Getter and Setter methods
+    def get_billing_name(self):
+        """
+        Returns the billing name for the payment.
+        """
+        return self._billing_name
 
-    def get_amount(self):
-        """Return the payment amount."""
-        return self.amount
+    def set_billing_name(self, billing_name):
+        """
+        Sets the billing name for the payment.
+        """
+        self._billing_name = billing_name
 
-    def set_amount(self, amount):
-        """Set the payment amount."""
-        self.amount = amount
+    def get_card_type(self):
+        """
+        Returns the card type used for the payment.
+        """
+        return self._card_type
 
-    def process_payment(self, amount: float) -> str:
-        """Process the payment and return the payment status."""
-        pass  # This will be implemented to process the payment
+    def set_card_type(self, card_type):
+        """
+        Sets the card type used for the payment.
+        """
+        self._card_type = card_type
 
-class Invoice:
-    """
-    Represents an invoice.
+    def get_room_cost(self):
+        """
+        Returns the room cost.
+        """
+        return self._room_cost
 
-    Attributes:
-        invoice_id (str): Unique identifier for the invoice.
-        reservation (Reservation): The reservation associated with the invoice.
-        total_amount (float): Total amount of the invoice.
-        payment_status (str): Status of the payment (e.g., Pending).
-    """
-    def __init__(self, invoice_id: str, reservation: Reservation, total_amount: float, payment_status: str):
-        """Initialize an Invoice object with provided details."""
-        self.invoice_id = invoice_id
-        self.reservation: 'Reservation' = reservation
-        self.total_amount = total_amount
-        self.payment_status = payment_status  # PaymentStatus can be an Enum
+    def set_room_cost(self, room_cost):
+        """
+        Sets the room cost.
+        """
+        self._room_cost = room_cost
 
-    def get_invoice_id(self):
-        """Return the invoice identifier."""
-        return self.invoice_id
+    def get_nights(self):
+        """
+        Returns the number of nights for the stay.
+        """
+        return self._nights
 
-    def set_invoice_id(self, invoice_id):
-        """Set the invoice identifier."""
-        self.invoice_id = invoice_id
+    def set_nights(self, nights):
+        """
+        Sets the number of nights for the stay.
+        """
+        self._nights = nights
 
-    def get_reservation(self):
-        """Return the reservation."""
-        return self.reservation
+    def get_taxes_and_fees(self):
+        """
+        Returns the taxes and fees for the stay.
+        """
+        return self._taxes_and_fees
 
-    def set_reservation(self, reservation):
-        """Set the reservation."""
-        self.reservation = reservation
+    def set_taxes_and_fees(self, taxes_and_fees):
+        """
+        Sets the taxes and fees for the stay.
+        """
+        self._taxes_and_fees = taxes_and_fees
 
-    def get_total_amount(self):
-        """Return the total amount"""
-        return self.total_amount
+    def get_total_charges(self):
+        """
+        Returns the total charges for the stay.
+        """
+        return self._total_charges
 
-    def set_total_amount(self, total_amount):
-        """Set the total amount."""
-        self.total_amount = total_amount
+    def set_total_charges(self, total_charges):
+        """
+        Sets the total charges for the stay.
+        """
+        self._total_charges = total_charges
 
-    def get_payment_status(self):
-        """Return the payment status"""
-        return self.payment_status
+    # Placeholder method for processing the payment
+    def display_payment_info(self):
+        """
+        Displays the payment information. This is a placeholder for future functionality.
+        """
+        pass
 
-    def set_payment_status(self, payment_status):
-        """Set the payment status."""
-        self.payment_status = payment_status
+# Example to populate and display the information shown in Figure 1
 
-    def generate_invoice(self):
-        """Generate an invoice for the reservation."""
-        print("Your Reservation Is Confirmed")
-        print("Thank you for your reservation. Please print your hotel receipt and show it at checkin\n")
+# Creating customer object
+customer = Customer(
+    name="Ted Vera",
+    email="tedvera@mac.com",
+    trip_number="1568450968",
+    confirmation_number="52532687"
+)
 
-        print(f"Your Name: {self.reservation.customer.name}")
-        print(f"Your Email: {self.reservation.customer.email}")
-        print(f"Priceline Trip Number: {self.reservation.advance_payment.payment_id}")
-        print(f"Hotel Confirmation Number: {self.reservation.reservation_id}\n")
+# Creating hotel room object
+hotel_room = HotelRoom(
+    address="2455 Trinity Drive, Los Alamos, NM, 87544",
+    room_type="2 Queen Beds",
+    room_number="1",
+    price_per_night=89.55,
+    amenities="No Smoking/Desk/Safe/Coffee Maker in Room/Hair Dryer"
+)
 
-        print("Comfort Inn & Suites Los Alamos")
-        print(f"{self.reservation.customer.address}")
-        print(f"Phone {self.reservation.customer.phone}")
-        print(f"{self.reservation.room.room_id}: ${self.reservation.customer.name}")
-        print(f"Check-In: {self.reservation.check_in_date}")
-        print(f"Check-Out: {self.reservation.check_out_date}")
-        print(f"Number of Nights: {(self.reservation.check_out_date - self.reservation.check_in_date).days }")
-        print(f"Number of Rooms: 1")
-        print(f"Room Type: {self.reservation.room.type}")
+# Creating payment object
+payment = Payment(
+    billing_name="Ted H Vera",
+    card_type="Mastercard (ending in 9604)",
+    room_cost=89.55,
+    nights=2,
+    taxes_and_fees=21.58,
+    total_charges=201.48
+)
 
-        print("Summary of Charges")
-        print(f"Billing Name: {self.reservation.customer.name}")
-        print(f"{self.reservation.advance_payment.payment_method}: {self.reservation.advance_payment.payment_note}")
-        print(f"Room Cost: {self.reservation.room.price_per_night}")
-        print(f"Rooms: 1")
-        print(f"Nights: {(self.reservation.check_out_date - self.reservation.check_in_date).days }")
-        print(f"Room Subtotal: ${self.reservation.room_cost:.2f}")
-        print(f"Taxes and Fees: ${self.reservation.taxes:.2f}")
-        print(f"Total Charges: ${self.reservation.total_amount:.2f}")
-        print("prices are in US dollars")
+# Displaying the reservation confirmation information
+print("Reservation Confirmation:")
+print(f"Customer: {customer.get_name()}")
+print(f"Email: {customer.get_email()}")
+print(f"Trip Number: {customer.get_trip_number()}")
+print(f"Hotel Confirmation Number: {customer.get_confirmation_number()}")
 
+print("\nHotel Details:")
+print(f"Hotel Address: {hotel_room.get_address()}")
+print(f"Room Number: {hotel_room.get_room_number()}")
+print(f"Room Type: {hotel_room.get_room_type()}")
+print(f"Price per Night: ${hotel_room.get_price_per_night()}")
+print(f"Amenities: {hotel_room.get_amenities()}")
 
-    def send_invoice(self):
-        """Send the generated invoice to the customer."""
-        pass  # Implement invoice sending logic
-
-
-class Notification:
-    def __init__(self, notification_id: str, message: str, recipient_email: str, recipient_phone: str):
-        self.notification_id = notification_id
-        self.message = message
-        self.recipient_email = recipient_email
-        self.recipient_phone = recipient_phone
-
-    def send_email(self):
-        """Send an email notification."""
-        pass  # Implement email sending logic
-
-    def send_sms(self):
-        """Send an SMS notification."""
-        pass  # Implement SMS sending logic
-
-"""Class Implementations"""
-
-def main():
-    # Hotel rooms
-    room1 = Room("Room001", "2 Queen Beds No Smoking Desk/Safe/Coffee Maker in Room/Hair Dryer", 89.95, True)
-    room2 = Room("Room002", "2 Queen Beds No Smoking Desk/Safe/Coffee Maker in Room/Hair Dryer", 89.95, True)
-    room3 = Room("Room003", "2 Queen Beds No Smoking Desk/Safe/Coffee Maker in Room/Hair Dryer", 89.95, True)
-    room4 = Room("Room004", "2 Queen Beds No Smoking Desk/Safe/Coffee Maker in Room/Hair Dryer", 89.95, True)
-    room5 = Room("Room005", "2 Queen Beds No Smoking Desk/Safe/Coffee Maker in Room/Hair Dryer", 89.95, True)
-
-    # Create a customer
-    customer = Customer("C001", "Ted Vera", "tedivera@mac.com", "505-661-1110", "2455 Trinty Drive, Los Alamos, NM 87544")
-
-    # Create a reservation
-    reservation = Reservation("52523687", customer, datetime(2010, 8, 22), datetime(2010, 8, 24))
-
-    # Check whether the room is available or not
-    isRoomAvailable = room1.check_availability(DateRange(datetime(2023, 10, 10), datetime(2023, 10, 15)))
-    # Let's set room availability to true manually
-    isRoomAvailable = True
-
-    if isRoomAvailable:
-        room1.set_availability(False)
-        reservation.room = room1
-        reservation.confirm_reservation()
-
-        taxes = 21.58
-        room_cost = reservation.room.price_per_night * (reservation.check_out_date - reservation.check_in_date).days
-        reservation.set_taxes(taxes)
-        reservation.set_room_cost(room_cost)
-        reservation.set_total_amount(room_cost+taxes)
-    # Let's set reservation status to Confirmed manually
-    reservation.status = 'Confirmed'
-
-    # Create an adavance payment
-    if reservation.status == 'Confirmed':
-        advance_payment_amount = reservation.total_amount * 0.2
-        payment = Payment("15549850358", advance_payment_amount, "Pending", datetime.now(), "Credit Card", "Mastercard (ending in 1904)")
-        payment.process_payment(advance_payment_amount)
-        reservation.set_advance_payment(payment)
-
-        # Send a notification to the user
-        notification = Notification("No123456789", "Your reservation is confirmed", "tedivera@mac.com", "505-661-1110")
-        notification.send_email()
-        notification.send_sms()
-
-    invoice = Invoice("INV001", reservation, reservation.total_amount, "Paid")
-    invoice.generate_invoice()
-    invoice.send_invoice()
-
-if __name__ == "__main__":
-    main()
+print("\nSummary of Charges:")
+print(f"Billing Name: {payment.get_billing_name()}")
+print(f"Card Type: {payment.get_card_type()}")
+print(f"Room Cost: ${payment.get_room_cost()}")
+print(f"Nights: {payment.get_nights()}")
+print(f"Taxes and Fees: ${payment.get_taxes_and_fees()}")
+print(f"Total Charges: ${payment.get_total_charges()}")
